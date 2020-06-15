@@ -3,7 +3,7 @@
 
 // Lissajous generates GIF animations of random Lissajous figures.
 
-// change image to green on black
+// produce images in multiple colors
 
 package main
 
@@ -20,33 +20,20 @@ import (
 	"time"
 )
 
-//!+main
-
-var palette = []color.Color{color.Black, color.RGBA{0x00, 0xff, 0x00, 0xff}}
-
-const (
-	blackIndex = 0 // first color in palette
-	greenIndex = 1 // next color in palette
-)
-
 func main() {
-	//!-main
 	// The sequence of images is deterministic unless we seed
 	// the pseudo-random number generator using the current time.
 	// Thanks to Randall McPherson for pointing out the omission.
 	rand.Seed(time.Now().UTC().UnixNano())
 
 	if len(os.Args) > 1 && os.Args[1] == "web" {
-		//!+http
 		handler := func(w http.ResponseWriter, r *http.Request) {
 			lissajous(w)
 		}
 		http.HandleFunc("/", handler)
-		//!-http
 		log.Fatal(http.ListenAndServe("localhost:8000", nil))
 		return
 	}
-	//!+main
 	lissajous(os.Stdout)
 }
 
@@ -58,6 +45,19 @@ func lissajous(out io.Writer) {
 		nframes = 64    // number of animation frames
 		delay   = 8     // delay between frames in 10ms units
 	)
+
+	var palette = []color.Color{color.Black}
+	r := uint8(rand.Intn(255))
+	g := uint8(rand.Intn(255))
+	b := uint8(rand.Intn(255))
+
+	// should probably be done in a nicer way. Right now it loops back to 0, which is a bit jarring
+	for i := 0; i < nframes; i++ {
+		ui := uint8(i)
+		c := color.RGBA{r + ui, g + ui, b + ui, 255}
+		palette = append(palette, c)
+	}
+
 	freq := rand.Float64() * 3.0 // relative frequency of y oscillator
 	anim := gif.GIF{LoopCount: nframes}
 	phase := 0.0 // phase difference
@@ -68,7 +68,7 @@ func lissajous(out io.Writer) {
 			x := math.Sin(t)
 			y := math.Sin(t*freq + phase)
 			img.SetColorIndex(size+int(x*size+0.5), size+int(y*size+0.5),
-				greenIndex)
+				uint8(i))
 		}
 		phase += 0.1
 		anim.Delay = append(anim.Delay, delay)
@@ -76,5 +76,3 @@ func lissajous(out io.Writer) {
 	}
 	gif.EncodeAll(out, &anim) // NOTE: ignoring encoding errors
 }
-
-//!-main
