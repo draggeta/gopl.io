@@ -3,7 +3,7 @@
 
 // Lissajous generates GIF animations of random Lissajous figures.
 
-// produce images in multiple colors
+// Ex: produce images in multiple colors
 
 package main
 

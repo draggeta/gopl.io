@@ -3,7 +3,7 @@
 
 // Lissajous generates GIF animations of random Lissajous figures.
 
-// change image to green on black
+// Ex: change image to green on black
 
 package main
 
