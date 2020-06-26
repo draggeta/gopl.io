@@ -1,3 +1,5 @@
+// Ex: add conversion to and from Kelvin
+
 package main
 
 import (
