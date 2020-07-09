@@ -24,17 +24,18 @@ func main() {
 	const (
 		xmin, ymin, xmax, ymax = -2, -2, +2, +2
 		width, height          = 1024, 1024
+		sWidth, sHeight        = width * 2, height * 2
 	)
 
 	img := image.NewRGBA(image.Rect(0, 0, width, height))
 	for py := 0; py < height; py++ {
 		pyS := py * 2
-		y0 := float64(pyS)/(height*2)*(ymax-ymin) + ymin
-		y1 := float64(pyS+1)/(height*2)*(ymax-ymin) + ymin
+		y0 := float64(pyS)/sHeight*(ymax-ymin) + ymin
+		y1 := float64(pyS+1)/sHeight*(ymax-ymin) + ymin
 		for px := 0; px < width; px++ {
 			pxS := px * 2
-			x0 := float64(pxS)/(width*2)*(xmax-xmin) + xmin
-			x1 := float64(pxS+1)/(width*2)*(xmax-xmin) + xmin
+			x0 := float64(pxS)/sWidth*(xmax-xmin) + xmin
+			x1 := float64(pxS+1)/sWidth*(xmax-xmin) + xmin
 			z00 := complex(x0, y0)
 			z10 := complex(x1, y0)
 			z01 := complex(x0, y1)
