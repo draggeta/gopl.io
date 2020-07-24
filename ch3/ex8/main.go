@@ -29,7 +29,7 @@ func main() {
 			x := float64(px)/width*(xmax-xmin) + xmin
 			z := complex(x, y)
 			// Image point (px, py) represents complex value z.
-			img.Set(px, py, mandelbrot(z))
+			img.Set(px, py, mandelbrotRat(z))
 		}
 	}
 	png.Encode(os.Stdout, img) // NOTE: ignoring errors
@@ -87,6 +87,7 @@ func mandelbrotBigFloat(z complex128) color.Color {
 	return color.Black
 }
 
+// This is as slow as... foliage falling down when the iterations increase.
 func mandelbrotRat(z complex128) color.Color {
 	const iterations = 200
 	const contrast = 15
