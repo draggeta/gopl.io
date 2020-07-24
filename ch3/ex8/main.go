@@ -5,14 +5,17 @@
 //!+
 
 // Mandelbrot emits a PNG image of the Mandelbrot fractal.
+
+// Ex: use high precision numbers (bigint, rat) to generate the mandelbrot
+
 package main
 
 import (
 	"image"
 	"image/color"
 	"image/png"
-	"math/cmplx"
 	"math/big"
+	"math/cmplx"
 	"os"
 )
 
@@ -101,7 +104,7 @@ func mandelbrotRat(z complex128) color.Color {
 		vR, vI = vRt, vIt
 		squareSum := new(big.Rat)
 		squareSum.Mul(vR, vR).Add(squareSum, (new(big.Rat)).Mul(vI, vI))
-		if squareSum.Cmp(big.NewRat(4,1)) == 1 {
+		if squareSum.Cmp(big.NewRat(4, 1)) == 1 {
 			return color.Gray{255 - contrast*n}
 		}
 	}

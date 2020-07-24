@@ -5,6 +5,9 @@
 //!+
 
 // Mandelbrot emits a PNG image of the Mandelbrot fractal.
+
+// Ex: create a webserver with x, y and zoom as query parameters
+
 package main
 
 import (
