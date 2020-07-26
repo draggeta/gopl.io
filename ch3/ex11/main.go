@@ -44,18 +44,23 @@ func comma(s string) string {
 
 func commaDecimals(s string) string {
 	var dec string
+	var sign string
 
 	if dot := strings.LastIndex(s, "."); dot != -1 {
 		dec = s[dot+1:]
 		s = s[:dot]
 	}
+	if s[0] == '+' || s[0] == '-' {
+		sign = string(s[0])
+		s = s[1:]
+	}
 
 	s = comma(s)
 
 	if dec != "" {
-		return fmt.Sprintf("%s.%s", s, dec)
+		return fmt.Sprintf("%s%s.%s", sign, s, dec)
 	}
-	return s
+	return sign + s
 }
 
 //!-

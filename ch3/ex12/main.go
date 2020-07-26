@@ -1,3 +1,5 @@
+// Ex: write a function that reports if two strings are anagrams
+
 package main
 
 import (
@@ -29,6 +31,7 @@ func main() {
 		w2Count[r]++
 	}
 
+	// could compare each key, but this was more neat (but slower)
 	if reflect.DeepEqual(w1Count, w2Count) {
 		fmt.Println("Are anagrams")
 	} else {
