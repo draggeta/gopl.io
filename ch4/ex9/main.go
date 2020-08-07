@@ -21,10 +21,10 @@ func main() {
 	}
 	countWords(f, count)
 
+	fmt.Printf("count\tword\n")
 	for k, v := range count {
 		fmt.Printf("%d\t%s\n", v, k)
 	}
-
 }
 
 func countWords(f *os.File, c map[string]int) {
