@@ -23,13 +23,14 @@ func main() {
 		log.Fatal(err)
 	}
 	tn := time.Now()
+	ty := tn.Sub(tn.AddDate(-1, 0, 0))
+	tm := tn.Sub(tn.AddDate(0, -1, 0))
+
 	fmt.Printf("%d issues:\n", result.TotalCount)
 	for _, item := range result.Items {
 		var age string
 
 		d := tn.Sub(item.CreatedAt)
-		ty := tn.Sub(tn.AddDate(-1, 0, 0))
-		tm := tn.Sub(tn.AddDate(0, -1, 0))
 
 		switch true {
 		case d >= ty:
